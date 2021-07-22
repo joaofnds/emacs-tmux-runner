@@ -7,7 +7,7 @@
 ;; Created: July 12, 2021
 ;; Modified: July 12, 2021
 ;; Version: 0.0.1
-;; Keywords: Symbol’s value as variable is void: finder-known-keywords
+;; Keywords: tmux runner lisp vtr vim-tmux-runner
 ;; Homepage: https://github.com/joaofnds/emacs-tmux-runner
 ;; Package-Requires: ((emacs "24.4"))
 ;;
