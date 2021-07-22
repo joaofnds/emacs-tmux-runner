@@ -120,21 +120,6 @@
 
 ;;; Altogether:
 
-(defun etr:tmux (command)
-  (interactive)
-  "Run a tmux shell command.
-  COMMAND is concated with 'tmux '"
-  (shell-command-to-string (concat "tmux " command)))
-
-(cl-defun etr:send-keys (input &optional (target (etr:target-pane)))
-  (interactive)
-  (etr:tmux (format "send-keys -t %s -l %s" target input)))
-
-(cl-defun etr:send-command (input &optional (target (etr:target-pane)))
-  (interactive)
-  (etr:send-keys input target)
-  (etr:tmux (format "send-keys -t %s C-m" target)))
-
 (defun etr:prompt (prompt &rest args)
   "Print PROMPT and ask for some o ARGS."
   (apply 'completing-read prompt (append args '(nil t))))
@@ -154,6 +139,21 @@
   "Check if session, window and pane are set and set it if not."
   (unless (and *etr:session* *etr:window* *etr:pane*)
     (etr:reset-target-pane)))
+
+(defun etr:tmux (command)
+  (interactive)
+  "Run a tmux shell command.
+  COMMAND is concated with 'tmux '"
+  (shell-command-to-string (concat "tmux " command)))
+
+(cl-defun etr:send-keys (input &optional (target (etr:target-pane)))
+  (interactive)
+  (etr:tmux (format "send-keys -t %s -l %s" target input)))
+
+(cl-defun etr:send-command (input &optional (target (etr:target-pane)))
+  (interactive)
+  (etr:send-keys input target)
+  (etr:tmux (format "send-keys -t %s C-m" target)))
 
 (defun etr:vslip ()
   (interactive)
