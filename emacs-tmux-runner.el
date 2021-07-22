@@ -52,10 +52,10 @@
   (interactive)
   "Select a tmux window."
   (let ((windows (etr:list-windows)))
-    (first
+    (car
      (split-string
       (if (= (length windows) 1)
-          (first windows)
+          (car windows)
         (etr:prompt "Window:" windows))))))
 
 (defun etr:set-window ()
