@@ -46,7 +46,9 @@
 (defun etr:list-windows ()
   (interactive)
   "Lists tmux windows."
-  (s-lines (etr:tmux "list-windows -F '#{window_index} #{window_name}'")))
+  (split-string
+   (etr:tmux "list-windows -F '#{window_index} #{window_name}'")
+   "\n"))
 
 (defun etr:select-window ()
   (interactive)
@@ -200,7 +202,7 @@
   "Sanitizes a string grabbed from the buffer.
    This is intented to by applied to strings that are going to be
    sended to a terminal."
-  (s-trim (shell-quote-argument str)))
+  (string-trim (shell-quote-argument str)))
 
 (cl-defun etr:send-lines ()
   "Sends current selected text (or current line if no selection) to tmux."
