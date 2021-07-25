@@ -43,28 +43,28 @@
   (it "disables key name lookup (processes as UTF8)"
     (with-default-target
      (etr:send-keys "ls")
-     (expect (sent-cmd) :to-match "-l ls")))
+     (expect (sent-cmd) :to-contain-substr "-l ls")))
 
   (it "ends with the provided arg"
     (with-default-target
      (etr:send-keys "whoami")
-     (expect (sent-cmd) :to-match "whoami$")))
+     (expect (sent-cmd) :to-end-with "whoami")))
 
   (it "doesn't press enter / doesn't send C-m"
     (with-default-target
      (etr:send-keys "ls")
-     (expect (sent-cmd) :not :to-match "C-m$")))
+     (expect (sent-cmd) :not :to-end-with-enter)))
 
   (it "allows commands to be sent partially"
     (with-default-target
      (etr:send-keys "who")
-     (expect (sent-cmd) :to-match "who$")
+     (expect (sent-cmd) :to-end-with "who")
 
      (etr:send-keys "am")
-     (expect (sent-cmd) :to-match "am$")
+     (expect (sent-cmd) :to-end-with "am")
 
      (etr:send-keys "i")
-     (expect (sent-cmd) :to-match "i$"))))
+     (expect (sent-cmd) :to-end-with "i"))))
 
 (describe "etr:send-command"
   (before-each (stub-shell))
@@ -77,14 +77,10 @@
   (it "disabled key name lookup (processes as UTF8)"
     (with-default-target
      (etr:send-command "ls")
-     (expect (sent-cmd) :to-match "\-l ls")))
+     (expect (first-sent-cmd) :to-contain-substr "-l ls")))
 
-  (it "sends just one command"
+  (it "sends two commands, one for the actual command and another for <CR>"
     (with-default-target
      (etr:send-command "ls")
-     (expect (cmds-sent-count) :to-equal 1)))
-
-  (it "ends with C-m"
-    (with-default-target
-     (etr:send-command "ls")
-     (expect (sent-cmd) :to-match " C-m$"))))
+     (expect (nth-sent-cmd 0) :to-end-with "ls")
+     (expect (nth-sent-cmd 1) :to-end-with-enter))))

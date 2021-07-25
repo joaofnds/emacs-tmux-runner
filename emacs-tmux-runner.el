@@ -152,9 +152,13 @@
   (interactive)
   (etr:tmux (format "send-keys -t %s -l %s" target input)))
 
+(cl-defun etr:send-enter (&optional (target (etr:target-pane)))
+  (etr:tmux (format "send-keys -t %s C-m" target)))
+
 (cl-defun etr:send-command (input &optional (target (etr:target-pane)))
   (interactive)
-  (etr:send-keys (concat input " C-m") target))
+  (etr:send-keys input target)
+  (etr:send-enter))
 
 (defun etr:vslipt ()
   (interactive)
