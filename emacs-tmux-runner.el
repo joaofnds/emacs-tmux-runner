@@ -157,7 +157,7 @@
   (etr:send-keys input target)
   (etr:tmux (format "send-keys -t %s C-m" target)))
 
-(defun etr:vslip ()
+(defun etr:vslipt ()
   (interactive)
   "Splits vertically."
   (etr:tmux "split-window"))
