@@ -50,7 +50,7 @@
      (etr:send-keys "whoami")
      (expect (sent-cmd) :to-end-with "whoami")))
 
-  (it "doesn't press enter / doesn't send C-m"
+  (it "does not send C-m"
     (with-default-target
      (etr:send-keys "ls")
      (expect (sent-cmd) :not :to-end-with-enter)))
@@ -74,7 +74,7 @@
      (etr:send-command "ls")
      (expect-cmd-to-default-target)))
 
-  (it "disabled key name lookup (processes as UTF8)"
+  (it "disables key name lookup (processes as UTF8)"
     (with-default-target
      (etr:send-command "ls")
      (expect (first-sent-cmd) :to-contain-substr "-l ls")))
