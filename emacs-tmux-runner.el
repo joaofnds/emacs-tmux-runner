@@ -47,8 +47,7 @@
   (interactive)
   "Lists tmux windows."
   (split-string
-   (etr:tmux "list-windows -F '#{window_index} #{window_name}'")
-   "\n"))
+   (etr:tmux "list-windows -F '#{window_index} #{window_name}'") "\n" t))
 
 (defun etr:select-window ()
   (interactive)
